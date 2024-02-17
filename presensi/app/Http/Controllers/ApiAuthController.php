@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\M_sesionuser;
+use App\Models\Pegawai;
 use App\Models\User;
-use App\Models\Pasien;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 
 class ApiAuthController extends Controller
 {
@@ -30,29 +28,43 @@ class ApiAuthController extends Controller
                     'status' => 'success',
                     'data' => [$cek],
                 ];
-            }  
-            else if ($cek->roles_id == '3')  
-            {
-                $datauser=User::find($cek->id);
+            } else if ($cek->roles_id == '2') {
+                $datauser = Pegawai::where('iduser', $cek->id)->first();
+                $roles = Auth::user()->roles_id;
+                $idpegawai = $datauser->idpegawai;
+                $namapegawai = $datauser->namapegawai;
+
+            $datanya= [
+                    'id' => $cek->id,
+                    'name' => $cek->name,
+                    'userid' => $cek->id,
+                    'username' => $cek->name,
+                    'email' => $cek->email,
+                    'roles_id' => $cek->roles_id,
+                    'idpegawai' => $idpegawai,
+                    'namapegawai' => $namapegawai,
+                ];
                 return $data = [
                     'status' => 'success',
-                    'data' => [$cek],
+                    'data' => [$datanya],
+
                 ];
+
             }
-           
-            
+
         } else { // false
             return $data = [
-                'status' =>false,
+                'status' => false,
                 'data' => [],
             ];
         }
     }
-    public function register(Request $request){   
+    public function register(Request $request)
+    {
         $validator_unique = Validator::make($request->all(), [
             'email' => 'required|unique:users|email',
         ]);
-        if($validator_unique->fails()){
+        if ($validator_unique->fails()) {
             return $data = [
                 'status' => false,
                 'message' => 'Email sudah terdaftar',
@@ -60,11 +72,11 @@ class ApiAuthController extends Controller
         }
         $user = new User();
         $user->name = $request->name;
-        $user->roles_id = 3;
-        $user->email = $request->email;        
-        $user->password = Hash::make($request->password);        
-        $user->alamat= $request->alamat;
-        $user->nohp= $request->nohp;
+        $user->roles_id = 2;
+        $user->email = $request->email;
+        $user->password = Hash::make($request->password);
+        $user->alamat = $request->alamat;
+        $user->nohp = $request->nohp;
         $user->save();
         $id = $user->id;
 
@@ -76,18 +88,18 @@ class ApiAuthController extends Controller
     }
     public function listmekanik()
     {
-        $user = User::where('roles_id',2)->get();      
+        $user = User::where('roles_id', 2)->get();
         return Response::json($user);
     }
 
     public function gantipassword(Request $request)
     {
         $rules = [
-            'password'                 => 'required',
+            'password' => 'required',
         ];
 
         $messages = [
-            'password.required'     => 'Password wajib diisi',
+            'password.required' => 'Password wajib diisi',
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -96,22 +108,22 @@ class ApiAuthController extends Controller
             return [
                 'status' => false,
                 'message' => 'Isian password wajib di isi',
-                'data' => []
+                'data' => [],
             ];
         }
 
         $data = [
-            'email'     => $request->email,
-            'access_token'=> $request->token
+            'email' => $request->email,
+            'access_token' => $request->token,
         ];
 
-       $cek= User::where('email', $request->email)->where('access_token',$request->token)->first();
+        $cek = User::where('email', $request->email)->where('access_token', $request->token)->first();
 
         if ($cek) { // true sekalian session field di users nanti bisa dipanggil via Auth
             $password = $request->password;
             User::where('email', $request->email)
-            ->where('access_token',$request->token)
-            ->update(['password' => Hash::make($password)]);
+                ->where('access_token', $request->token)
+                ->update(['password' => Hash::make($password)]);
             return [
                 'status' => true,
             ];

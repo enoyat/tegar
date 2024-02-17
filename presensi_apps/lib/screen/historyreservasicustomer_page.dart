@@ -1,26 +1,27 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:servis_apps/models/reservasigetmodel.dart';
+import 'package:servis_apps/models/presensimodel.dart';
 import 'package:servis_apps/models/user.dart';
-import 'package:servis_apps/utils/reservasidio.dart';
-import 'package:servis_apps/widget/itemreservasi_widget.dart';
-import 'package:servis_apps/widget/itemreservasihistory_widget.dart';
+import 'package:servis_apps/utils/presensidio.dart';
+import 'package:servis_apps/widget/itempresensihistory_widget.dart';
 
-class HistoryReservasiCustomerPage extends StatefulWidget {
-  const HistoryReservasiCustomerPage({
+class HistorypresensiCustomerPage extends StatefulWidget {
+  const HistorypresensiCustomerPage({
     Key? key,
     required this.userid,
   }) : super(key: key);
   final int userid;
 
   @override
-  State<HistoryReservasiCustomerPage> createState() => _HistoryReservasiCustomerPageState();
+  State<HistorypresensiCustomerPage> createState() =>
+      _HistorypresensiCustomerPageState();
 }
 
-class _HistoryReservasiCustomerPageState extends State<HistoryReservasiCustomerPage> {
-  List<ReservasigetModel> reservasi = [];
+class _HistorypresensiCustomerPageState
+    extends State<HistorypresensiCustomerPage> {
+  List<PresensiModel> presensi = [];
   bool isLoading = false;
-  int reservasiCount = 0;
+  int presensiCount = 0;
   int userid = 0;
   List<User> usermodel = [];
 
@@ -28,9 +29,9 @@ class _HistoryReservasiCustomerPageState extends State<HistoryReservasiCustomerP
     setState(() {
       isLoading = true;
     });
-    await ReservasiDio().listgetreservasi(widget.userid,'finish').then((value) {
+    await PresensiDio().listpresensi(12).then((value) {
       setState(() {
-        reservasi = value;
+        presensi = value;
         isLoading = false;
       });
     });
@@ -50,7 +51,7 @@ class _HistoryReservasiCustomerPageState extends State<HistoryReservasiCustomerP
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'History Reservasi',
+          'Riwayat presensi ',
           textAlign: TextAlign.left,
           style: TextStyle(color: Colors.black),
         ),
@@ -71,10 +72,8 @@ class _HistoryReservasiCustomerPageState extends State<HistoryReservasiCustomerP
           ),
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children:  [
-              Text(
-                'Daftar Reservasi'
-              ),
+            children: [
+              Text('Daftar Presensi'),
             ],
           ),
           isLoading
@@ -82,15 +81,15 @@ class _HistoryReservasiCustomerPageState extends State<HistoryReservasiCustomerP
                   child: CircularProgressIndicator(),
                 )
               : Expanded(
-                  child: reservasi.isEmpty
+                  child: presensi.isEmpty
                       ? const Center(
                           child: Text('Tidak ada item'),
                         )
                       : ListView.builder(
-                          itemCount: reservasi.length,
+                          itemCount: presensi.length,
                           itemBuilder: (context, index) {
-                            return ItemReservasiHistoryWidget(
-                              reservasi: reservasi[index],
+                            return ItemPresensiHistoryWidget(
+                              presensi: presensi[index],
                               handleRefresh: refreshData,
                             );
                           }),

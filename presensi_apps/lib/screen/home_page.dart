@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:servis_apps/screen/admin/historyreservasi.dart';
+import 'package:intl/intl.dart';
 import 'package:servis_apps/screen/historyreservasicustomer_page.dart';
-import 'package:servis_apps/screen/listmotor_page.dart';
-import 'package:servis_apps/screen/listpelayanan_page.dart';
-import 'package:servis_apps/screen/listreservasipage.dart';
-import 'package:servis_apps/screen/pelayanan_page.dart';
-import 'package:servis_apps/screen/register_motor.dart';
-
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_page.dart';
 
@@ -24,18 +18,18 @@ class _HomePageState extends State<HomePage> {
   String? username = "";
   String? email = "";
   int? userid = 0;
-
+  String jam = "00:02:00";
   void _ontap(int index) async {
     if (index == 0) {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
         return const HomePage();
       }));
     } else if (index == 1) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
-        return ListReservasiPage(
-          userid: userid!,
-        );
-      }));
+      // Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //   return ListpresensiPage(
+      //     userid: userid!,
+      //   );
+      // }));
     } else if (index == 2) {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
@@ -67,8 +61,17 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     _setter();
+    waktu();
 
     super.initState();
+  }
+
+  void waktu() async {
+    var now = DateTime.now();
+    var jamnya = "${now.hour}:${now.minute}:${now.second}";
+    setState(() {
+      jam = jamnya.toString();
+    });
   }
 
   @override
@@ -81,57 +84,11 @@ class _HomePageState extends State<HomePage> {
             const SizedBox(height: 20),
             Container(
               margin: const EdgeInsets.only(top: 5),
-              width: double.infinity,
-              child: Card(
-                margin: const EdgeInsets.only(top: 5, bottom: 5),
-                color: const Color.fromARGB(255, 3, 68, 17),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: const Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(height: 10),
-                    Image(
-                      image: AssetImage('assets/images/logo.png'),
-                      width: 100,
-                      height: 100,
-                    ),
-                    SizedBox(height: 5),
-                    Text('Bengkel Oka Motor',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: Color.fromARGB(255, 196, 190, 190),
-                        )),
-                    SizedBox(height: 5),
-                    Text('Jl. Raya Puputan No. 86, Renon, Denpasar',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromARGB(255, 196, 190, 190),
-                        ),
-                        textAlign: TextAlign.center),
-                    SizedBox(height: 5),
-                    Text('Telp. 0361-234567',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Color.fromARGB(255, 196, 190, 190),
-                        ),
-                        textAlign: TextAlign.center),
-                    SizedBox(height: 10),
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.only(top: 5),
               height: 120,
               width: double.infinity,
               child: Card(
                 margin: const EdgeInsets.only(top: 5, bottom: 5),
-                color: const Color.fromARGB(255, 217, 219, 224),
+                color: const Color.fromARGB(255, 3, 129, 31),
                 elevation: 5,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -140,19 +97,12 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const Text('Member Dashboard',
+                    const Text('Halo, Selamat Datang',
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
                         )),
-                    const SizedBox(height: 5),
-                    const Text('Bengkel Oka Motor',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black,
-                        ),
-                        textAlign: TextAlign.center),
                     const SizedBox(height: 5),
                     isLoading
                         ? const CircularProgressIndicator()
@@ -166,6 +116,55 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
+            StreamBuilder<String>(
+                stream: Stream.periodic(const Duration(seconds: 1)).map((_) {
+                  waktu();
+                  return jam;
+                }),
+                builder: (context, snapshot) {
+                  return Container(
+                    margin: const EdgeInsets.only(top: 5),
+                    height: 120,
+                    width: double.infinity,
+                    child: Card(
+                      margin: const EdgeInsets.only(top: 5, bottom: 5),
+                      color: const Color.fromARGB(255, 212, 214, 218),
+                      elevation: 5,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(jam.isNotEmpty ? jam : "Waktu Tidak Diketahui",
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                          Text(DateFormat('dd-MM-yyyy').format(DateTime.now()),
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              )),
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                'Masuk: 07:00',
+                                textAlign: TextAlign.center,
+                              ),
+                              SizedBox(height: 5),
+                              Text('Pulang: 17:00', textAlign: TextAlign.center)
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                }),
             GridView.count(crossAxisCount: 3, shrinkWrap: true, children: [
               Card(
                 color: const Color.fromARGB(255, 221, 82, 2),
@@ -177,7 +176,7 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return ListMotorPage(userid: userid!);
+                      return HistorypresensiCustomerPage(userid: userid!);
                     }));
                   },
                   child: Column(
@@ -190,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        'Motor',
+                        'PRESENSI',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -201,7 +200,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Card(
-                color: Color.fromARGB(255, 20, 166, 185),
+                color: const Color.fromARGB(255, 20, 166, 185),
                 elevation: 5,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -210,7 +209,7 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return RegisterMotor(
+                      return HistorypresensiCustomerPage(
                         userid: userid!,
                       );
                     }));
@@ -219,13 +218,13 @@ class _HomePageState extends State<HomePage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset(
-                        'assets/images/jadwala.png',
+                        'assets/images/laporan.png',
                         width: 60,
                         height: 60,
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        'Registrasi Motor',
+                        'RIWAYAT PRESENSI',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -245,7 +244,7 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return PelayananPage(userid: userid!);
+                      return HistorypresensiCustomerPage(userid: userid!);
                     }));
                   },
                   child: Column(
@@ -258,106 +257,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        'Ajuan Layanan',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Card(
-                color: const Color.fromARGB(255, 83, 235, 129),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return ListPelayananPage(userid: userid!);
-                    }));
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/jadwala.png',
-                        width: 60,
-                        height: 60,
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Daftar Ajuan Layanan',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Card(
-                color: const Color.fromARGB(255, 201, 25, 236),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return ListReservasiPage(userid: userid!);
-                    }));
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/jadwala.png',
-                        width: 60,
-                        height: 60,
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'Reservasi',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Card(
-                color: const Color.fromARGB(255, 201, 25, 236),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return HistoryReservasiCustomerPage(userid: userid!);
-                    }));
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/jadwala.png',
-                        width: 60,
-                        height: 60,
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'History Reservasi',
+                        'JADWAL KERJA',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
@@ -383,8 +283,8 @@ class _HomePageState extends State<HomePage> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt_outlined),
-            label: 'Reservasi',
+            icon: Icon(Icons.person),
+            label: 'Profil',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.logout),

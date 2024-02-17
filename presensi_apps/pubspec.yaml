@@ -33,15 +33,16 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_launcher_icons: ^0.13.1
+  image_picker: ^0.8.7+4
   intl: ^0.18.1
   shared_preferences: ^2.1.1
-  image_picker: ^0.8.7+4
+  tflite_flutter: ^0.10.4
 
 dev_dependencies:
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-    
+
 flutter_icons:
   android: "launcher_icon"
   ios: true

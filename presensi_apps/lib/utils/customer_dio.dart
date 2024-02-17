@@ -4,7 +4,7 @@ import '../models/register.dart';
 
 class CustomerDio {
   late Dio dio;
-  final String baseUrl = "http://okamotor.my.id/api";
+  final String baseUrl = "http://192.168.100.222:8000/api";
   CustomerDio() {
     dio = Dio();
   }

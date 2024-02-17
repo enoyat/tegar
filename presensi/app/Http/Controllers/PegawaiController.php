@@ -14,7 +14,7 @@ class PegawaiController extends Controller
     public function index()
     {
             $pegawais = Pegawai::get();
-            return view('pegawai.index', ['pegawais' => $pegawais]);       
+            return view('pegawai.index', ['pegawais' => $pegawais]);
     }
 
     public function add()
@@ -33,6 +33,13 @@ class PegawaiController extends Controller
             'pwd' => 'required',
         ]);
 
+        $user = new User();
+        $user->name = $request->namapegawai;
+        $user->email = $request->email;
+        $user->password = bcrypt($request->pwd);
+        $user->roles_id = 2;
+        $simpan=$user->save();
+        $iduser = $user->id;
         $pegawai = new pegawai();
         $pegawai->namapegawai = $request->namapegawai;
         $pegawai->nik = $request->nik;
@@ -40,16 +47,11 @@ class PegawaiController extends Controller
         $pegawai->nohp = $request->nohp;
         $pegawai->email = $request->email;
         $pegawai->pwd = $request->pwd;
+        $pegawai->iduser = $iduser;
         $simpan=$pegawai->save();
 
 
-        
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->pwd);
-        $user->roles_id = 2;
-        $simpan=$user->save();
+
 
 
         if ($simpan) {
@@ -70,7 +72,7 @@ class PegawaiController extends Controller
     public function update(Request $request)
     {
 
-       
+
         $request->validate([
             'namapegawai' => 'required',
             'nik' => 'required',
@@ -88,16 +90,23 @@ class PegawaiController extends Controller
             'email' => $request->email,
             'pwd' => $request->pwd,
         ]);
+        $pegawai = Pegawai::where('idpegawai', $request->idpegawai)->first();
+        $iduser = $pegawai->iduser;
+        $simpan = User::where('id', $iduser)->update([
+            'name' => $request->namapegawai,
+            'email' => $request->email,
+            'password' => bcrypt($request->pwd),
+        ]);
 
         if ($simpan) {
             return redirect()->route('pegawai.index')
-                ->with(['success' => 'dokumen sukses diubah']);
+                ->with(['success' => 'pegawai sukses diubah']);
         } else {
             return redirect()->route('pegawai.index')
                 ->with(['success', 'ada kesalahan simpan, coba beberapa saat lagi']);
         } //
     }
-    public function destroy(Request $request)
+    public function delete(Request $request)
     {
         $id = $request->id;
         $pegawai = Pegawai::where('idpegawai', '=', $id)->first();

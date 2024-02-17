@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Edit Jadwal Nikah</h1>
+                        <h1>Ubah Data Pegawai</h1>
                     </div>
                 </div>
             </div>
@@ -37,42 +37,47 @@
                                             </ul>
                                         </div>
                                     @endif
-                                    <form action="{{ route('jadwal.update') }}" method="POST" role="form" enctype="multipart/form-data">
+                                    <form action="{{ route('pegawai.update',$pegawai->idpegawai) }}" method="POST" role="form" enctype="multipart/form-data">
                                         @csrf
-                                        <input type="hidden" name="idjadwal" id="idjadwal" value="{{ $jadwal->idjadwal }}">
+                                        @method('PUT')
+                                        <input type="hidden" name="idpegawai" id="idpegawai" value="{{ $pegawai->idpegawai }}">
 
                                         <div class="form-group">
-                                            <label>ID Pendaftaran</label>
-                                            <input type="text" name="idpendaftaran" id="idpendaftaran" class="form-control"  value="{{ $jadwal->idpendaftaran }}" readonly>
-                                           
-                                        </div>
-                                        
-                                        <div class="form-group">
-                                            <label>Tanggal Nikah </label>
-                                            <input type="date" name="tanggalnikah" id="tanggalnikah" class="form-control" value="{{ $jadwal->tanggalnikah }}">
-                                                
+                                            <label>Nama Pegawai </label>
+                                            <input type="text" name="namapegawai" id="namapegawai" class="form-control" value="{{ $pegawai->namapegawai }}" required>
+
                                         </div>
                                         <div class="form-group">
-                                            <label>Jam Nikah </label>
-                                            <input type="text" name="jam" id="jam" class="form-control" maxlength="5" placeholder="HH:MM" value="{{ $jadwal->jam }}">
-                                                
+                                            <label>NIK </label>
+                                            <input type="text" name="nik" id="nik" class="form-control" value="{{ $pegawai->nik }}" required>
+
                                         </div>
                                         <div class="form-group">
-                                            <label>Tempat Nikah </label>
-                                            <input type="text" name="tempatnikah" id="tempatnikah" class="form-control" value="{{ $jadwal->tempatnikah }}">
-                                                
+                                            <label>Email </label>
+                                            <input type="email" name="email" id="email" class="form-control" value="{{ $pegawai->email }}" required>
+
                                         </div>
                                         <div class="form-group">
-                                            <label>Keterangan </label>
-                                            <input type="text" name="keterangan" id="keterangan" class="form-control" value="{{ $jadwal->keterangan }}">
-                                                
+                                            <label>Password </label>
+                                            <input type="text" name="pwd" id="pwd" class="form-control" value="{{ $pegawai->pwd }}" required>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Alamat </label>
+                                            <input type="text" name="alamat" id="alamat" class="form-control" value="{{ $pegawai->alamat }}" required>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <label>No HP </label>
+                                            <input type="text" name="nohp" id="nohp" class="form-control" value="{{ $pegawai->nohp }}" required>
+
                                         </div>
                                         <button type="submit" class="btn btn-primary">Simpan</button>
-                                        <a href="{{ route('jadwal.index') }}">
+                                        <a href="{{ route('pegawai.index') }}">
                                             <div class="btn btn-primary">Kembali</div>
                                         </a>
 
-                                  
+
                                     <br>
 
                                 </div>
@@ -93,5 +98,5 @@
         toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
     });
     </script>
-        
+
 @endsection

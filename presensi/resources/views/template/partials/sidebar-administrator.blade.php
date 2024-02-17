@@ -40,15 +40,15 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#"
-                                class="nav-link {{ request()->is('laporan.rpttransaction') ? 'active' : '' }}">
+                            <a href="{{ route('lokasi.index') }}"
+                                class="nav-link {{ request()->is('lokasi.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Lokasi</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="#"
-                                class="nav-link {{ request()->is('laporan.rpttransaction') ? 'active' : '' }}">
+                                class="nav-link {{ request()->is('jadwal.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Data Jadwal</p>
                             </a>
@@ -56,20 +56,20 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('administrator.home.index') }}"
-                        class="nav-link shadow-none {{ request()->is('administrator/datapresensi*') ? 'active' : '' }}">
+                    <a href="{{ route('presensi.index') }}"
+                        class="nav-link shadow-none {{ request()->is('presensi.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-solid fa-cube"></i>
                         <p>Data Presensi</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('administrator.home.index') }}"
-                        class="nav-link shadow-none {{ request()->is('administrator/datapresensi*') ? 'active' : '' }}">
+                    <a href="{{ route('laporan.rpttransaction') }}"
+                        class="nav-link shadow-none {{ request()->is('laporan.rpttransaction*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-solid fa-cube"></i>
                         <p>Laporan Presensi</p>
                     </a>
                 </li>
-                
+
                 <li class="nav-item">
                     <a href="#" class="nav-link {{ request()->is('utility*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-reguler fa-user"></i>
