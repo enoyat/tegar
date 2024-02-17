@@ -5,19 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Reservasi extends Model
+class Pegawai extends Model
 {
     use HasFactory;
-    protected $table = 'reservasi';
-    protected $primaryKey = 'idreservasi';
+    protected $table = 'pegawai';
+    protected $primaryKey = 'idpegawai';
     public $timestamps = false;
     protected $guarded = [];
-    function getmekanik(){
+    function getuser(){
         return $this->belongsTo(User::class,'iduser','id');
     }
-    function getpelayanan(){
-        return $this->belongsTo(Pelayanan::class,'idpelayanan','idpelayanan');
-    }
-   
-    
+  
 }
