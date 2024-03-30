@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:servis_apps/models/presensimodel.dart';
+import 'package:presensi_apps/models/presensimodel.dart';
 
 class ItemPresensiHistoryWidget extends StatelessWidget {
   const ItemPresensiHistoryWidget({

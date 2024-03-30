@@ -1,4 +1,4 @@
-import 'package:servis_apps/utils/customer_dio.dart';
+import 'package:presensi_apps/utils/customer_dio.dart';
 import 'package:flutter/material.dart';
 
 import '../models/register.dart';
@@ -12,19 +12,16 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  
-
   final _formKey = GlobalKey<FormState>();
   final username = TextEditingController();
   final email = TextEditingController();
   final address = TextEditingController();
-  
+
   final nohp = TextEditingController();
   final kelurahan = TextEditingController();
   String gender = "";
   late DateTime selectedDate = DateTime.now();
-  
- 
+
   final password = TextEditingController();
   bool isLoading = false;
 
@@ -109,9 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
               ),
-             
               const SizedBox(height: 20),
-             
               Container(
                 margin: const EdgeInsets.only(left: 20, right: 20),
                 child: TextFormField(
@@ -127,7 +122,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
               ),
-             
               const SizedBox(height: 20),
               Container(
                 margin: const EdgeInsets.only(left: 20, right: 20),
@@ -168,7 +162,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   children: [
                     ElevatedButton(
                       onPressed: () async {
-                        
                         final RegisterModel item = RegisterModel(
                             password: password.text,
                             name: username.text,

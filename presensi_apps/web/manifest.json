@@ -1,6 +1,6 @@
 {
-    "name": "servis_apps",
-    "short_name": "servis_apps",
+    "name": "presensi_apps",
+    "short_name": "presensi_apps",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,9 +1,9 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:servis_apps/models/presensimodel.dart';
-import 'package:servis_apps/models/user.dart';
-import 'package:servis_apps/utils/presensidio.dart';
-import 'package:servis_apps/widget/itempresensihistory_widget.dart';
+import 'package:presensi_apps/models/presensimodel.dart';
+import 'package:presensi_apps/models/user.dart';
+import 'package:presensi_apps/utils/presensidio.dart';
+import 'package:presensi_apps/widget/itempresensihistory_widget.dart';
 
 class HistorypresensiCustomerPage extends StatefulWidget {
   const HistorypresensiCustomerPage({

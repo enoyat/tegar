@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:servis_apps/screen/login_page.dart';
+import 'package:presensi_apps/screen/login_page.dart';
 
 class SplashScreenPage extends StatefulWidget {
   const SplashScreenPage({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class _SplashScreenPageState extends State<SplashScreenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 171, 233, 159),
+      backgroundColor: const Color.fromARGB(255, 171, 233, 159),
       body: Center(
         child: Image.asset(
           "assets/images/splash.png",

@@ -1,4 +1,4 @@
-name: servis_apps
+name: presensi_apps
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -32,11 +32,12 @@ dependencies:
   dio: ^5.2.1+1
   flutter:
     sdk: flutter
-  flutter_launcher_icons: ^0.13.1
+  
   image_picker: ^0.8.7+4
   intl: ^0.18.1
-  shared_preferences: ^2.1.1
-  tflite_flutter: ^0.10.4
+  servicestack: ^2.0.3
+  shared_preferences: ^2.1.1 
+
 
 dev_dependencies:
   flutter_lints: ^2.0.0

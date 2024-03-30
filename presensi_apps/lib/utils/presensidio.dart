@@ -1,6 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, empty_catches
 import "package:dio/dio.dart";
-import "package:servis_apps/models/presensimodel.dart";
+import "package:presensi_apps/models/presensimodel.dart";
 
 class PresensiDio {
   late Dio dio;
