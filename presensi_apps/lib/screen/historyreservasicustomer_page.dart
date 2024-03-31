@@ -7,9 +7,9 @@ import 'package:presensi_apps/widget/itempresensihistory_widget.dart';
 
 class HistorypresensiCustomerPage extends StatefulWidget {
   const HistorypresensiCustomerPage({
-    Key? key,
+    super.key,
     required this.userid,
-  }) : super(key: key);
+  });
   final int userid;
 
   @override

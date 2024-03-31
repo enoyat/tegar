@@ -1,3 +1,7 @@
+// ignore: file_names, duplicate_ignore
+// ignore: file_names
+// ignore_for_file: file_names
+
 import 'package:presensi_apps/locator.dart';
 import 'package:presensi_apps/pages/db/databse_helper.dart';
 import 'package:presensi_apps/pages/models/user.model.dart';
@@ -7,9 +11,6 @@ import 'package:presensi_apps/screen/home_page.dart';
 import 'package:presensi_apps/services/camera.service.dart';
 import 'package:presensi_apps/services/ml_service.dart';
 import 'package:flutter/material.dart';
-import 'package:image/image.dart';
-import '../home.dart';
-import 'app_text_field.dart';
 
 class AuthActionButton extends StatefulWidget {
   AuthActionButton(

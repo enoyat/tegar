@@ -47,17 +47,17 @@ class _PresensiState extends State<Presensi> {
         backgroundColor: Colors.transparent,
         actions: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 20, top: 20),
+            padding: const EdgeInsets.only(right: 20, top: 20),
             child: PopupMenuButton<String>(
-              child: Icon(
+              child: const Icon(
                 Icons.more_vert,
                 color: Colors.black,
               ),
               onSelected: (value) {
                 switch (value) {
                   case 'Clear DB':
-                    DatabaseHelper _dataBaseHelper = DatabaseHelper.instance;
-                    _dataBaseHelper.deleteAll();
+                    DatabaseHelper dataBaseHelper = DatabaseHelper.instance;
+                    dataBaseHelper.deleteAll();
                     break;
                 }
               },
@@ -80,10 +80,10 @@ class _PresensiState extends State<Presensi> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
-                      Image(image: AssetImage('assets/images/logo.png')),
-                      Container(
+                      const Image(image: AssetImage('assets/images/logo.png')),
+                      SizedBox(
                         width: MediaQuery.of(context).size.width * 0.8,
-                        child: Column(
+                        child: const Column(
                           children: [
                             Text(
                               "PRESENSI",
@@ -104,30 +104,31 @@ class _PresensiState extends State<Presensi> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (BuildContext context) => SignIn(),
+                                  builder: (BuildContext context) =>
+                                      const SignIn(),
                                 ),
                               );
                             },
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color.fromARGB(255, 23, 226, 5),
+                                color: const Color.fromARGB(255, 23, 226, 5),
                                 boxShadow: <BoxShadow>[
                                   BoxShadow(
-                                    color: Color.fromARGB(255, 12, 12, 12)
+                                    color: const Color.fromARGB(255, 12, 12, 12)
                                         .withOpacity(0.1),
                                     blurRadius: 1,
-                                    offset: Offset(0, 2),
+                                    offset: const Offset(0, 2),
                                   ),
                                 ],
                               ),
                               alignment: Alignment.center,
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   vertical: 14, horizontal: 16),
                               width: MediaQuery.of(context).size.width * 0.8,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
+                                children: const [
                                   Text(
                                     'PRESENSI',
                                     style: TextStyle(
@@ -141,7 +142,7 @@ class _PresensiState extends State<Presensi> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 10,
                           ),
                           InkWell(
@@ -149,19 +150,20 @@ class _PresensiState extends State<Presensi> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (BuildContext context) => SignUp(),
+                                  builder: (BuildContext context) =>
+                                      const SignUp(),
                                 ),
                               );
                             },
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Color(0xFF0F0BDB),
+                                color: const Color(0xFF0F0BDB),
                                 boxShadow: <BoxShadow>[
                                   BoxShadow(
                                     color: Colors.blue.withOpacity(0.1),
                                     blurRadius: 1,
-                                    offset: Offset(0, 2),
+                                    offset: const Offset(0, 2),
                                   ),
                                 ],
                               ),
@@ -169,7 +171,7 @@ class _PresensiState extends State<Presensi> {
                               padding: EdgeInsets.symmetric(
                                   vertical: 14, horizontal: 16),
                               width: MediaQuery.of(context).size.width * 0.8,
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
@@ -187,7 +189,7 @@ class _PresensiState extends State<Presensi> {
                           SizedBox(
                             height: 20,
                             width: MediaQuery.of(context).size.width * 0.8,
-                            child: Divider(
+                            child: const Divider(
                               thickness: 2,
                             ),
                           ),
@@ -198,7 +200,7 @@ class _PresensiState extends State<Presensi> {
                 ),
               ),
             )
-          : Center(
+          : const Center(
               child: CircularProgressIndicator(),
             ),
     );

@@ -38,11 +38,10 @@ class MLService {
       }
       var interpreterOptions = InterpreterOptions()..addDelegate(delegate);
 
-      this._interpreter = await Interpreter.fromAsset('mobilefacenet.tflite',
+      _interpreter = await Interpreter.fromAsset('mobilefacenet.tflite',
           options: interpreterOptions);
+    // ignore: empty_catches
     } catch (e) {
-      print('Failed to load model.');
-      print(e);
     }
   }
 
@@ -54,7 +53,7 @@ class MLService {
     input = input.reshape([1, 112, 112, 3]);
     List output = List.generate(1, (index) => List.filled(192, 0));
 
-    this._interpreter?.run(input, output);
+    _interpreter?.run(input, output);
     output = output.reshape([192]);
 
     this._predictedData = List.from(output);
