@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
+import 'package:presensi_apps/locator.dart';
+import 'package:presensi_apps/models/lokasi.dart';
+import 'package:presensi_apps/pages/sign-in.dart';
+import 'package:presensi_apps/pages/sign-up.dart';
 import 'package:presensi_apps/screen/historyreservasicustomer_page.dart';
+import 'package:presensi_apps/services/camera.service.dart';
+import 'package:presensi_apps/services/face_detector_service.dart';
+import 'package:presensi_apps/utils/presensidio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_page.dart';
+import 'package:presensi_apps/services/ml_service.dart';
+import 'package:geolocator/geolocator.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,13 +21,33 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final MLService _mlService = locator<MLService>();
+  final FaceDetectorService _mlKitService = locator<FaceDetectorService>();
+  final CameraService _cameraService = locator<CameraService>();
+  bool loading = false;
+
   int selectedindex = 0;
+  var lat1 = 0.0;
+  var long1 = 0.0;
+  var lat2 = 0.0;
+  var long2 = 0.0;
   int iddokumen = 0;
+  double _latController = 0;
+  double _longController = 0;
   bool isLoading = false;
   String? username = "";
   String? email = "";
   int? userid = 0;
   String jam = "00:02:00";
+  void curLokasi() async {
+    Position lokasi = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    setState(() {
+      _latController = lokasi.latitude;
+      _longController = lokasi.longitude;
+    });
+  }
+
   void _ontap(int index) async {
     if (index == 0) {
       Navigator.push(context, MaterialPageRoute(builder: (context) {
@@ -45,6 +73,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _setter() async {
+    curLokasi();
     setState(() {
       isLoading = true;
     });
@@ -57,14 +86,22 @@ class _HomePageState extends State<HomePage> {
         isLoading = false;
       });
     });
+    PresensiDio().getlokasi().then((value) {
+      setState(() {
+        lat1 = value["data"][0]["lat1"];
+        long1 = value["data"][0]["long1"];
+        lat2 = value["data"][0]["lat2"];
+        long2 = value["data"][0]["long2"];
+      });
+    });
   }
 
   @override
   void initState() {
+    super.initState();
+    _initializeServices();
     _setter();
     waktu();
-
-    super.initState();
   }
 
   void waktu() async {
@@ -73,6 +110,14 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       jam = jamnya.toString();
     });
+  }
+
+  _initializeServices() async {
+    setState(() => loading = true);
+    await _cameraService.initialize();
+    await _mlService.initialize();
+    _mlKitService.initialize();
+    setState(() => loading = false);
   }
 
   @override
@@ -154,7 +199,8 @@ class _HomePageState extends State<HomePage> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Text(
-                                'Masuk: 07:00',
+                                // ignore: prefer_interpolation_to_compose_strings
+                                'Masuk: 07:00 ',
                                 textAlign: TextAlign.center,
                               ),
                               SizedBox(height: 5),
@@ -175,10 +221,36 @@ class _HomePageState extends State<HomePage> {
                 ),
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return const HomePage();
-                    }));
+                    SnackBar snackBar = SnackBar(
+                      content: Text(
+                          "Lokasi Anda saat ini : $_latController, $_longController Lokasi Kantor: $lat1, $long1 - $lat2, $long2"),
+                    );
+                    if (_latController >= lat1 &&
+                        _latController <= lat2 &&
+                        _longController >= long1 &&
+                        _longController <= long2) {
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => const SignIn(),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                              "Anda diluar jangkauan kantor, silahkan coba lagi nanti"),
+                        ),
+                      );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => const HomePage(),
+                        ),
+                      );
+                    }
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -236,17 +308,19 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               Card(
-                color: const Color.fromARGB(255, 83, 235, 129),
+                color: Color.fromARGB(255, 137, 13, 238),
                 elevation: 5,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: InkWell(
                   onTap: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return HistorypresensiCustomerPage(userid: userid!);
-                    }));
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => SignUp(),
+                      ),
+                    );
                   },
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -258,7 +332,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const SizedBox(height: 10),
                       const Text(
-                        'JADWAL KERJA',
+                        'REKAM WAJAH',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,

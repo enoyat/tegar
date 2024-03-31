@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:presensi_apps/screen/home_page.dart';
 import 'package:presensi_apps/screen/login_page.dart';
 
 class SplashScreenPage extends StatefulWidget {
-  const SplashScreenPage({Key? key}) : super(key: key);
+  const SplashScreenPage({super.key});
 
   @override
   State<SplashScreenPage> createState() => _SplashScreenPageState();

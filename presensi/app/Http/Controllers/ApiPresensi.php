@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Presensi;
 use Illuminate\Http\Request;
+use App\Models\Lokasi;
 use Illuminate\Support\Facades\Response;
-
+use Illuminate\Support\Facades\DB;
 class ApiPresensi extends Controller
 {
 
@@ -21,19 +22,22 @@ class ApiPresensi extends Controller
                 ->update([
                     'jampulang' => date('H:i'),
                 ]);
-            return redirect()->route('presensi.index')
-                ->with(['success' => 'presensi sukses disimpan']);
+                return $data = [
+                    'status' => true,
+                    'message' => 'Update Presensi Sukses',
+                ];
         } else {
             $presensi = new presensi();
             $presensi->idpegawai = $request->idpegawai;
-            $presensi->statuspresensi = $request->statuspresensi;
+            $presensi->statuspresensi = 'Hadir';
             $presensi->tanggal = date('Y-m-d');
             $presensi->jamdatang = date('H:i');
+            $presensi->jampulang = "-";
             $simpan = $presensi->save();
 
             return $data = [
-                'status' => false,
-                'message' => 'Nomor Polisi Sudah Terdaftar',
+                'status' => true,
+                'message' => 'Presensi Sukses',
             ];
         }
 
@@ -41,10 +45,16 @@ class ApiPresensi extends Controller
 
     public function listpresensi($id)
     {
+        $bulan= date('m');
+        $tahun= date('Y');
+
         $presensi = Presensi::join('pegawai', 'pegawai.idpegawai', '=', 'presensi.idpegawai')
         ->where('presensi.idpegawai', $id)
-        ->where('tanggal', date('Y-m-d'))->get();
-        return Response::json($presensi);
+        ->whereMonth('tanggal', '=', $bulan)
+        ->whereYear('tanggal', '=', $tahun)
+        ->orderBy('tanggal', 'desc')
+        ->get();
+       return Response::json($presensi);
     }
 
     public function show($id)
@@ -57,4 +67,24 @@ class ApiPresensi extends Controller
         $motor = Presensi::where('idpresensi', $id)->delete();
         return Response::json($motor);
     }
+
+    public function lokasi()
+    {
+        $lokasi = Lokasi::first();
+        $datanya= [
+            'lat1' => $lokasi->lat1,
+            'lat2' => $lokasi->lat2,
+            'long1' => $lokasi->long1,
+            'long2' => $lokasi->long2,
+        ];
+        return $data = [
+            'status' => 'success',
+            'data' => [$datanya],
+
+        ];
+
+
+
+    }
+
 }

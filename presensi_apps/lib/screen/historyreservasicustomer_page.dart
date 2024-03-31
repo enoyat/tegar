@@ -29,7 +29,7 @@ class _HistorypresensiCustomerPageState
     setState(() {
       isLoading = true;
     });
-    await PresensiDio().listpresensi(12).then((value) {
+    await PresensiDio().listpresensi(userid).then((value) {
       setState(() {
         presensi = value;
         isLoading = false;

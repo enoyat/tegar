@@ -51,7 +51,7 @@
 
                                         </div>
                                         <div class="form-group">
-                                            <label>Radius </label>
+                                            <label>Radius (meter) </label>
                                             <input type="text" name="radius" id="radius" class="form-control" required>
 
                                         </div>

@@ -3,7 +3,7 @@ import "package:dio/dio.dart";
 
 class NetworkManager {
   late Dio dio;
-  final String baseUrl = "http://192.168.100.222:8000/api";
+  final String baseUrl = "http://192.168.200.7:8000/api";
 
   NetworkManager() {
     dio = Dio();

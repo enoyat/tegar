@@ -24,6 +24,7 @@ Route::post('gantipassword', 'App\Http\Controllers\ApiAuthController@gantipasswo
 Route::post('presensi/store', [ApiPresensi::class, 'store']);
 Route::get('presensi/listpresensi/{id}', [ApiPresensi::class, 'listpresensi']);
 Route::get('presensi/show/{id}', [ApiPresensi::class, 'show']);
+Route::get('lokasi', [ApiPresensi::class, 'lokasi']);
 
 Route::post('register', 'App\Http\Controllers\ApiAuthController@register');
 Route::post('apimedia', 'App\Http\Controllers\ApiMedia@store');

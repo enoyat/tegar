@@ -1,10 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, empty_catches
 import "package:dio/dio.dart";
+import "package:presensi_apps/models/lokasi.dart";
 import "package:presensi_apps/models/presensimodel.dart";
 
 class PresensiDio {
   late Dio dio;
-  final String baseUrl = "http://192.168.100.222:8000/api";
+  final String baseUrl = "http://192.168.200.7:8000/api";
 
   PresensiDio() {
     dio = Dio();
@@ -12,11 +13,20 @@ class PresensiDio {
 
   Future<List<PresensiModel>> listpresensi(int id) async {
     try {
-      final result = await dio.get('$baseUrl/presensi/listpresensi/12');
+      final result = await dio.get('$baseUrl/presensi/listpresensi/$id');
 
       return (result.data as List)
           .map((e) => PresensiModel.fromMap(e as Map<String, dynamic>))
           .toList();
+    } catch (e) {
+      throw Exception("Exception occured: $e");
+    }
+  }
+
+  Future getlokasi() async {
+    try {
+      final result = await dio.get('$baseUrl/lokasi');
+      return result.data;
     } catch (e) {
       throw Exception("Exception occured: $e");
     }

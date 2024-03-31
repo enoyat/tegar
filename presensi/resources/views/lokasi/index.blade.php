@@ -19,9 +19,7 @@
                         <a href="{{ route('lokasi.index') }}">
                             <div id="viewData" class="btn btn-info">Refresh</div>
                         </a>
-                        <a href="{{ route('lokasi.add') }}">
-                            <div id="viewData" class="btn btn-info">Tambah lokasi</div>
-                        </a>
+
 
                         <br>
                         <br>
@@ -43,6 +41,12 @@
                                         Radius
                                     </th>
                                     <th>
+                                        Range Latitude
+                                    </th>
+                                    <th>
+                                        Range Longitude
+                                    </th>
+                                    <th>
                                         Aksi
                                     </th>
 
@@ -56,6 +60,9 @@
                                         <td><?php echo $key->latitude; ?></td>
                                         <td><?php echo $key->longitude; ?></td>
                                         <td><?php echo $key->radius; ?></td>
+                                        <td><?php echo $key->lat1; ?> - <?php echo $key->lat1; ?></td>
+                                        <td><?php echo $key->long1; ?> - <?php echo $key->long2; ?></td>
+
                                         <td>
 
 

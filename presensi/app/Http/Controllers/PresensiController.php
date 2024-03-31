@@ -56,6 +56,8 @@ class PresensiController extends Controller
             $presensi->statuspresensi = $request->statuspresensi;
             $presensi->tanggal = date('Y-m-d');
             $presensi->jamdatang = date('H:i');
+            $presensi->jampulang = "-";
+
             $simpan=$presensi->save();
 
             if ($simpan) {
