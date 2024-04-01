@@ -224,10 +224,7 @@ class _HomePageState extends State<HomePage> {
                       content: Text(
                           "Lokasi Anda saat ini : $_latController, $_longController Lokasi Kantor: $lat1, $long1 - $lat2, $long2"),
                     );
-                    if (_latController! >= lat1 &&
-                        _latController! <= lat2 &&
-                        _longController! >= long1 &&
-                        _longController! <= long2) {
+                    if (_latController! >= lat1 && _longController! <= long2) {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       Navigator.push(
                         context,
