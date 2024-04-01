@@ -31,8 +31,8 @@ class _HomePageState extends State<HomePage> {
   var lat2 = 0.0;
   var long2 = 0.0;
   int iddokumen = 0;
-  double _latController = 0;
-  double _longController = 0;
+  double? _latController = 0;
+  double? _longController = 0;
   bool isLoading = false;
   String? username = "";
   String? email = "";
@@ -224,10 +224,10 @@ class _HomePageState extends State<HomePage> {
                       content: Text(
                           "Lokasi Anda saat ini : $_latController, $_longController Lokasi Kantor: $lat1, $long1 - $lat2, $long2"),
                     );
-                    if (_latController >= lat1 &&
-                        _latController <= lat2 &&
-                        _longController >= long1 &&
-                        _longController <= long2) {
+                    if (_latController! >= lat1 &&
+                        _latController! <= lat2 &&
+                        _longController! >= long1 &&
+                        _longController! <= long2) {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       Navigator.push(
                         context,
