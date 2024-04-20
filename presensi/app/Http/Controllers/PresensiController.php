@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\presensi;
+use App\Models\Presensi;
 use App\Models\User;
 use App\Models\Pegawai;
 use Illuminate\Http\Request;
