@@ -20,7 +20,7 @@
                             <div id="viewData" class="btn btn-info">Refresh</div>
                         </a>
                         <a href="{{ route('presensi.add') }}">
-                            <div id="viewData" class="btn btn-info">Tambah Buku presensi</div>
+                            <div id="viewData" class="btn btn-info">Tambah presensi</div>
                         </a>
                         <form action="{{ route('presensi.index') }}" method="GET">
                             <div class="form-group>
