@@ -20,6 +20,7 @@ class _LoginPageState extends State<LoginPage> {
   var username = '';
   var userid = 0;
   var rolesid = 0;
+  var faceshape = '';
   bool status = false;
 
   _setter() async {
@@ -28,6 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     await prefs.setInt('rolesid', rolesid);
     await prefs.setString('username', username);
     await prefs.setString('email', email);
+    await prefs.setString('faceshape', faceshape);
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
         status = true;
@@ -124,6 +126,8 @@ class _LoginPageState extends State<LoginPage> {
                                             email = value["data"][0]["email"];
                                             rolesid =
                                                 value["data"][0]["roles_id"];
+                                            faceshape =
+                                                value["data"][0]["faceshape"];
 
                                             _setter();
                                           }),

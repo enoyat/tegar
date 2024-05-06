@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
   String? username = "";
   String? email = "";
   int? userid = 0;
+  String? faceshape = "";
   String jam = "00:02:00";
   void curLokasi() async {
     Position lokasi = await Geolocator.getCurrentPosition(
@@ -81,6 +82,7 @@ class _HomePageState extends State<HomePage> {
         username = prefs.getString('username');
         email = prefs.getString('email');
         userid = prefs.getInt('userid');
+        faceshape = prefs.getString('faceshape');
         isLoading = false;
       });
     });
@@ -150,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 5),
                     isLoading
                         ? const CircularProgressIndicator()
-                        : Text("ID :$userid - ${username!}",
+                        : Text("ID :$userid - ${username!} $faceshape",
                             style: const TextStyle(
                               fontSize: 15,
                               color: Colors.black,

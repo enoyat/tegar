@@ -48,4 +48,22 @@ class CustomerDio {
       throw Exception("Exception occured: $e");
     }
   }
+
+  Future faceshape(
+    String idpegawai,
+    String faceshape,
+  ) async {
+    try {
+      final result = await dio.post(
+        '$baseUrl/pegawai/store',
+        data: {
+          "idpegawai": idpegawai,
+          "faceshape": faceshape,
+        },
+      );
+      return result.data;
+    } catch (e) {
+      throw Exception("Exception occured: $e");
+    }
+  }
 }

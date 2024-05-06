@@ -17,5 +17,14 @@ class ApiPegawai extends Controller
         $pegawai = Pegawai::where('idpegawai',$id)->get();
         return Response::json($pegawai);
     }
+    public function store(Request $request)
+    {
+        Pegawai::where('idpegawai',$request->idpegawai)->update(['faceshape'=>$request->faceshape]);
+        return $data = [
+            'status' => true,
+            'faceshape' => $request->faceshape,
+        ];
+
+    }
 
 }

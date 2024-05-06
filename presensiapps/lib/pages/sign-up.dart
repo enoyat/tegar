@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:math' as math;
+// import 'package:google_ml_vision/google_ml_vision.dart';
 import 'package:presensiapps/locator.dart';
 import 'package:presensiapps/pages/widgets/FacePainter.dart';
 import 'package:presensiapps/pages/widgets/auth-action-button.dart';
@@ -104,6 +105,13 @@ class SignUpState extends State<SignUp> {
             });
             if (_saving) {
               _mlService.setCurrentPrediction(image, faceDetected);
+              List<Rect> boundingBoxes = [];
+              List<Map<FaceContourType, FaceContour?>> contours = [];
+              boundingBoxes.add(faceDetected!.boundingBox);
+              contours.add(faceDetected!.contours);
+              double leftEyeContour =
+                  FaceContourType.leftEye.toString().length.toDouble();
+              print(leftEyeContour);
               setState(() {
                 _saving = false;
               });

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_ml_vision/google_ml_vision.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:presensiapps/face_detector_painter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FaceDeteksi extends StatefulWidget {
   const FaceDeteksi({super.key});
@@ -19,6 +20,22 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
   var heightImage = 0.0;
   var faces = <Face>[];
   var shape = 0.0;
+  String? faceshape = '';
+
+  void _setter() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Future.delayed(const Duration(seconds: 2)).then((_) async {
+      setState(() {
+        faceshape = prefs.getString('faceshape');
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _setter();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +82,8 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
                 .toString()
                 .length
                 .toDouble();
-            if (leftEyeContour == 1.1) {
+
+            if (leftEyeContour.toString() == faceshape) {
               showDialogMessage('Wajah terdeteksi');
             } else {
               showDialogMessage('Wajah tidak dikenal');
