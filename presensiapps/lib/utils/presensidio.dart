@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, empty_catches
 import "package:dio/dio.dart";
+import "package:presensiapps/models/pegawai.dart";
 import "package:presensiapps/models/presensimodel.dart";
 
 class PresensiDio {
@@ -16,6 +17,18 @@ class PresensiDio {
 
       return (result.data as List)
           .map((e) => PresensiModel.fromMap(e as Map<String, dynamic>))
+          .toList();
+    } catch (e) {
+      throw Exception("Exception occured: $e");
+    }
+  }
+
+  Future<List<Pegawai>> getpegawai(int id) async {
+    try {
+      final result = await dio.get('$baseUrl/pegawai/$id');
+
+      return (result.data as List)
+          .map((e) => Pegawai.fromMap(e as Map<String, dynamic>))
           .toList();
     } catch (e) {
       throw Exception("Exception occured: $e");

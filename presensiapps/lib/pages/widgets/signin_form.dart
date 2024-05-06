@@ -33,6 +33,7 @@ class _SignInSheetState extends State<SignInSheet> {
         tanggal: '2021-10-10',
       ),
     );
+
     // showDialog(
     //   context: context,
     //   builder: (context) {
@@ -47,6 +48,12 @@ class _SignInSheetState extends State<SignInSheet> {
         builder: (context) => HomePage(),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _signIn(context, widget.user);
   }
 
 //  Future _signIn(context, user) async {
@@ -65,25 +72,6 @@ class _SignInSheetState extends State<SignInSheet> {
                   '!' +
                   widget.userid.toString(),
               style: TextStyle(fontSize: 20),
-            ),
-          ),
-          Container(
-            child: Column(
-              children: [
-                SizedBox(height: 10),
-                Divider(),
-                SizedBox(height: 10),
-                AppButton(
-                  text: 'Presensi',
-                  onPressed: () async {
-                    _signIn(context, widget.user);
-                  },
-                  icon: Icon(
-                    Icons.login,
-                    color: Colors.white,
-                  ),
-                )
-              ],
             ),
           ),
         ],

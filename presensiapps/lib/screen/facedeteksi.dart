@@ -18,6 +18,7 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
   var widthImage = 0.0;
   var heightImage = 0.0;
   var faces = <Face>[];
+  var shape = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -64,8 +65,11 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
                 .toString()
                 .length
                 .toDouble();
-            print('leftEyeContour: $leftEyeContour');
-            showDialogMessage('Wajah terdeteksi');
+            if (leftEyeContour == 1.1) {
+              showDialogMessage('Wajah terdeteksi');
+            } else {
+              showDialogMessage('Wajah tidak dikenal');
+            }
           }
 
           /// Sembunyikan loading

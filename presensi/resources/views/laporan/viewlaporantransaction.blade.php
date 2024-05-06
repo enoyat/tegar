@@ -56,7 +56,7 @@
         <td><?php echo $key["tanpaketerangan"]; ?></td>
         <td><?php echo $key["tepatwaktu"]; ?></td>
         <td><?php echo $key["terlambat"]; ?></td>
-        <td><a href="{{ route('laporan.presensi',['bulan'=>$bulan, 'tahun'=>$tahun, 'idpegawai'=>$key["idpegawai"]]) }}" class="btn btn-sm btn-success">Cetak Presensi</a></td>
+        <td><a href="{{ route('laporan.presensi',['bulan'=>$bulan, 'tahun'=>$tahun, 'idpegawai'=>$key["idpegawai"]]) }}" class="btn btn-sm btn-success" target="_blank">Cetak Presensi</a></td>
 
 
         <?php

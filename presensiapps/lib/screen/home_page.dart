@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:presensiapps/locator.dart';
+import 'package:presensiapps/pages/accound.dart';
 import 'package:presensiapps/pages/sign-in.dart';
 import 'package:presensiapps/pages/sign-up.dart';
 import 'package:presensiapps/screen/historyreservasicustomer_page.dart';
@@ -53,11 +54,9 @@ class _HomePageState extends State<HomePage> {
         return const HomePage();
       }));
     } else if (index == 1) {
-      // Navigator.push(context, MaterialPageRoute(builder: (context) {
-      //   return ListpresensiPage(
-      //     userid: userid!,
-      //   );
-      // }));
+      Navigator.push(context, MaterialPageRoute(builder: (context) {
+        return AccountPage(userid!);
+      }));
     } else if (index == 2) {
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.clear();
@@ -222,7 +221,7 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     SnackBar snackBar = SnackBar(
                       content: Text(
-                          "Lokasi Anda saat ini : $_latController, $_longController Lokasi Kantor: $lat1, $long1 - $lat2, $long2"),
+                          "Lokasi Anda saat ini : $_latController, $_longController "),
                     );
                     if (_latController! >= lat1 && _longController! <= long2) {
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);

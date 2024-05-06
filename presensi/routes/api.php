@@ -4,6 +4,7 @@ use App\Http\Controllers\ApiMerk;
 use App\Http\Controllers\ApiMotor;
 use App\Http\Controllers\ApiPelayanan;
 use App\Http\Controllers\ApiPresensi;
+use App\Http\Controllers\ApiPegawai;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,6 +26,7 @@ Route::post('presensi/store', [ApiPresensi::class, 'store']);
 Route::get('presensi/listpresensi/{id}', [ApiPresensi::class, 'listpresensi']);
 Route::get('presensi/show/{id}', [ApiPresensi::class, 'show']);
 Route::get('lokasi', [ApiPresensi::class, 'lokasi']);
+Route::get('pegawai/{id}', [ApiPegawai::class, 'getpegawai']);
 
 Route::post('register', 'App\Http\Controllers\ApiAuthController@register');
 Route::post('apimedia', 'App\Http\Controllers\ApiMedia@store');
