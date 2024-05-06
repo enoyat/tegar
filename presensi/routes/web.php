@@ -67,7 +67,8 @@ Route::group(['middleware' => ['web', 'auth', 'roles']], function () {
 
         Route::group(['prefix' => 'laporan'], function () {
             Route::get('rpttransaction', [LaporanTransaksi::class, 'rpttransaction'])->name('laporan.rpttransaction');
-            Route::post('laporantransaction', [laporanTransaksi::class, 'laporantransaction'])->name('laporan.laporantransaction');
+            Route::get('/laporantransaction', [laporanTransaksi::class, 'laporantransaction'])->name('laporan.laporantransaction');
+            Route::get('/presensi', [laporanTransaksi::class, 'presensi'])->name('laporan.presensi');
             Route::get('viewlaporantransaction', [laporanTransaksi::class, 'viewlaporantransaction'])->name('laporan.viewlaporantransaction');
 
             Route::get('exporttransaction', [LaporanTransaksi::class, 'exporttransaction'])->name('laporan.exporttransaction');

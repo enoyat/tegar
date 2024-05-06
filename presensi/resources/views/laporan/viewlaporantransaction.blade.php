@@ -1,4 +1,4 @@
-<table width="700" border="0" cellpadding="0" cellspacing="0" style="font-size: 11px">
+<table border="0" cellpadding="0" cellspacing="0" style="font-size: 11px">
 
     <tr>
         <td width="100">PERIODE</td>
@@ -34,6 +34,7 @@
             <th>
                Terlambat
             </th>
+            <th>Action</th>
 
 
 
@@ -55,6 +56,8 @@
         <td><?php echo $key["tanpaketerangan"]; ?></td>
         <td><?php echo $key["tepatwaktu"]; ?></td>
         <td><?php echo $key["terlambat"]; ?></td>
+        <td><a href="{{ route('laporan.presensi',['bulan'=>$bulan, 'tahun'=>$tahun, 'idpegawai'=>$key["idpegawai"]]) }}" class="btn btn-sm btn-success">Cetak Presensi</a></td>
+
 
         <?php
         echo "</tr>";
@@ -65,11 +68,10 @@
     ?>
     </tbody>
 </table>
+<a href="{{ route('laporan.laporantransaction',['bulan'=>$bulan, 'tahun'=>$tahun]) }}" class="btn btn-sm bg-primary" id="cetak" target="_blank">Cetak Laporan Presensi</a>
 <script>
     $('.mytable').DataTable({
-        dom: 'Brftip',
-        buttons: [
-            'print'
-        ]
     });
+
+
 </script>

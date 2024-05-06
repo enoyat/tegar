@@ -26,12 +26,14 @@ class PegawaiController extends Controller
 
         $request->validate([
             'namapegawai' => 'required',
-            'nik' => 'required',
+            'nik' => 'required|regex:/^[0-9]+$/',
             'alamat' => 'required',
             'nohp' => 'required',
             'email' => 'required|email|unique:pegawai,email',
             'pwd' => 'required',
-        ]);
+        ],
+        ['nik.regex'=>'NIK Hanya Angka']
+    );
 
         $user = new User();
         $user->name = $request->namapegawai;
@@ -75,12 +77,13 @@ class PegawaiController extends Controller
 
         $request->validate([
             'namapegawai' => 'required',
-            'nik' => 'required',
+            'nik' => 'required|regex:/^[0-9]+$/',
             'alamat' => 'required',
             'nohp' => 'required',
             'email' => 'required|email|unique:pegawai,email,' . $request->idpegawai . ',idpegawai',
             'pwd' => 'required',
-        ]);
+        ],
+        ['nik.regex'=>'NIK Hanya Angka']);
 
         $simpan = Pegawai::where('idpegawai', $request->idpegawai)->update([
             'namapegawai' => $request->namapegawai,

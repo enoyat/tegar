@@ -23,7 +23,7 @@
 
 
                 <li class="nav-item">
-                    <a href="#" class="nav-link {{ request()->is('laporan*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link {{ request()->is('pegawai*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-reguler fa-user"></i>
 
                         <p>
@@ -46,7 +46,7 @@
                                 <p>Lokasi</p>
                             </a>
                         </li>
-                      
+
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -58,7 +58,7 @@
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('laporan.rpttransaction') }}"
-                        class="nav-link shadow-none {{ request()->is('laporan.rpttransaction*') ? 'active' : '' }}">
+                        class="nav-link shadow-none {{ request()->is('laporan*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-solid fa-cube"></i>
                         <p>Laporan Presensi</p>
                     </a>
