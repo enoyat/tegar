@@ -112,6 +112,7 @@ class SignUpState extends State<SignUp> {
               double leftEyeContour =
                   FaceContourType.leftEye.toString().length.toDouble();
               print(leftEyeContour);
+              
               setState(() {
                 _saving = false;
               });

@@ -83,7 +83,7 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
                 .length
                 .toDouble();
 
-            if (leftEyeContour.toString() == faceshape) {
+            if (leftEyeContour.toString() == faces) {
               showDialogMessage('Wajah terdeteksi');
             } else {
               showDialogMessage('Wajah tidak dikenal');
