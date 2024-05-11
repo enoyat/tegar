@@ -5,8 +5,9 @@
 ?> --}}
 <style> .str{ mso-number-format:\@; } </style>
 <table width="700" border="0" cellpadding="0" cellspacing="0" style="font-size: 13px">
-        <tr>
-            <td colspan="3"><h1>Laporan Rekap Presensi</h1></td>
+        <tr style="height: 100px">
+            <td ><img src="{{ asset('assets/img/logo.jpg') }}" width="60px"></td>
+            <td colspan=2><h1>Laporan Rekap Presensi</h1></td>
         </tr>
 
     <tr>
@@ -18,6 +19,11 @@
         <td width="100">Tanggal Cetak</td>
         <td width="11">:</td>
         <td width="589">{{ date(now()) }}</td>
+    </tr>
+    <tr>
+        <td width="100">Tertanda</td>
+        <td width="11">:</td>
+        <td width="589">Admin</td>
     </tr>
 </table>
 <br>
