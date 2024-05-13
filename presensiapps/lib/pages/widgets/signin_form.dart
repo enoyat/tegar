@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 
 import 'package:presensiapps/models/presensimodel.dart';
 import 'package:presensiapps/pages/models/user.model.dart';
-import 'package:presensiapps/pages/widgets/app_button.dart';
 import 'package:presensiapps/screen/home_page.dart';
 import 'package:presensiapps/utils/presensidio.dart';
 
@@ -68,7 +67,7 @@ class _SignInSheetState extends State<SignInSheet> {
           Container(
             child: Text(
               'Selamat Datang , ' +
-                  widget.user.user +
+                  widget.user.user! +
                   '!' +
                   widget.userid.toString(),
               style: TextStyle(fontSize: 20),

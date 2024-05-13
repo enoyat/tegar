@@ -73,6 +73,7 @@ class SignUpState extends State<SignUp> {
     } else {
       _saving = true;
       await Future.delayed(Duration(milliseconds: 500));
+
       // await _cameraService.cameraController?.stopImageStream();
       await Future.delayed(Duration(milliseconds: 200));
       XFile? file = await _cameraService.takePicture();
@@ -81,6 +82,7 @@ class SignUpState extends State<SignUp> {
       setState(() {
         _bottomSheetVisible = true;
         pictureTaken = true;
+        _frameFaces();
       });
 
       return true;
@@ -109,10 +111,7 @@ class SignUpState extends State<SignUp> {
               List<Map<FaceContourType, FaceContour?>> contours = [];
               boundingBoxes.add(faceDetected!.boundingBox);
               contours.add(faceDetected!.contours);
-              double leftEyeContour =
-                  FaceContourType.leftEye.toString().length.toDouble();
-              print(leftEyeContour);
-              
+
               setState(() {
                 _saving = false;
               });
@@ -207,7 +206,7 @@ class SignUpState extends State<SignUp> {
           children: [
             body,
             CameraHeader(
-              "REGISTRASI",
+              "REGISTRASI WAJAH",
               onBackPressed: _onBackPressed,
             )
           ],

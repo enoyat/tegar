@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, empty_catches
 import "package:dio/dio.dart";
+import "package:presensiapps/models/faceshapemodel.dart";
 import "package:presensiapps/models/pegawai.dart";
 import "package:presensiapps/models/presensimodel.dart";
 
@@ -82,6 +83,19 @@ class PresensiDio {
     try {
       final result = await dio.post(
         "$baseUrl/presensi/store",
+        data: item.toMap(),
+      );
+
+      return result.data;
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
+
+  Future facestore(FaceShapeModel item) async {
+    try {
+      final result = await dio.post(
+        "$baseUrl/pegawai/store",
         data: item.toMap(),
       );
 

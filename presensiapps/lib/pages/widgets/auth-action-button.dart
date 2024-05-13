@@ -1,10 +1,7 @@
 import 'package:presensiapps/locator.dart';
 import 'package:presensiapps/pages/db/databse_helper.dart';
 import 'package:presensiapps/pages/models/user.model.dart';
-import 'package:presensiapps/pages/profile.dart';
 import 'package:presensiapps/pages/widgets/app_button.dart';
-import 'package:presensiapps/screen/home_page.dart';
-import 'package:presensiapps/services/camera.service.dart';
 import 'package:presensiapps/services/ml_service.dart';
 import 'package:flutter/material.dart';
 
@@ -23,51 +20,25 @@ class AuthActionButton extends StatefulWidget {
 
 class _AuthActionButtonState extends State<AuthActionButton> {
   final MLService _mlService = locator<MLService>();
-  final CameraService _cameraService = locator<CameraService>();
-
-  final TextEditingController _userTextEditingController =
-      TextEditingController(text: '');
-  final TextEditingController _passwordTextEditingController =
-      TextEditingController(text: '');
 
   User? predictedUser;
 
   Future _signUp(context) async {
     DatabaseHelper _databaseHelper = DatabaseHelper.instance;
     List predictedData = _mlService.predictedData;
-    String user = _userTextEditingController.text;
-    String password = _passwordTextEditingController.text;
+
     User userToSave = User(
-      user: user,
-      password: password,
+      user: predictedUser?.user!,
+      password: predictedUser?.password!,
       modelData: predictedData,
     );
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content:
+            Text('ini data facenya mas:' + userToSave.modelData.toString())));
     await _databaseHelper.insert(userToSave);
-    this._mlService.setPredictedData([]);
-    Navigator.push(context,
-        MaterialPageRoute(builder: (BuildContext context) => HomePage()));
-  }
-
-  Future _signIn(context) async {
-    String password = _passwordTextEditingController.text;
-    if (this.predictedUser!.password == password) {
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (BuildContext context) => Profile(
-                    this.predictedUser!.user,
-                    imagePath: _cameraService.imagePath!,
-                  )));
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            content: Text('Wrong password!'),
-          );
-        },
-      );
-    }
+    // this._mlService.setPredictedData([]);
+    // Navigator.push(context,
+    //     MaterialPageRoute(builder: (BuildContext context) => HomePage()));
   }
 
   Future<User?> _predictUser() async {
@@ -119,7 +90,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'CAPTURE',
+              'CAPTURE WAJAH',
               style: TextStyle(color: Colors.white),
             ),
             SizedBox(
@@ -142,7 +113,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
           widget.isLogin && predictedUser != null
               ? Container(
                   child: Text(
-                    'Welcome back, ' + predictedUser!.user + '.',
+                    'Welcome back, ' + predictedUser!.user! + '.',
                     style: TextStyle(fontSize: 20),
                   ),
                 )
@@ -161,9 +132,7 @@ class _AuthActionButtonState extends State<AuthActionButton> {
                 widget.isLogin && predictedUser != null
                     ? AppButton(
                         text: 'LOGIN',
-                        onPressed: () async {
-                          _signIn(context);
-                        },
+                        onPressed: () async {},
                         icon: Icon(
                           Icons.login,
                           color: Colors.white,

@@ -1,7 +1,7 @@
 import 'package:presensiapps/locator.dart';
 import 'package:presensiapps/pages/db/databse_helper.dart';
+import 'package:presensiapps/pages/rekamwajah.dart';
 import 'package:presensiapps/pages/sign-in.dart';
-import 'package:presensiapps/pages/sign-up.dart';
 import 'package:presensiapps/services/camera.service.dart';
 import 'package:presensiapps/services/ml_service.dart';
 import 'package:presensiapps/services/face_detector_service.dart';
@@ -148,7 +148,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (BuildContext context) => SignUp(),
+                                  builder: (BuildContext context) =>
+                                      RekamWajah(),
                                 ),
                               );
                             },
@@ -172,7 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    'PENDAFTARAN WAJAH',
+                                    'PENDAFTARAN',
                                     style: TextStyle(color: Colors.white),
                                   ),
                                   SizedBox(
