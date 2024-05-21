@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, empty_catches
 import "package:dio/dio.dart";
-import "package:presensiapps/models/faceshapemodel.dart";
 import "package:presensiapps/models/pegawai.dart";
 import "package:presensiapps/models/presensimodel.dart";
 
@@ -79,11 +78,13 @@ class PresensiDio {
     }
   }
 
-  Future postpresensi(PresensiModel item) async {
+  Future postpresensi(int id) async {
     try {
       final result = await dio.post(
         "$baseUrl/presensi/store",
-        data: item.toMap(),
+        data: {
+          "idpegawai": id,
+        },
       );
 
       return result.data;
@@ -92,11 +93,14 @@ class PresensiDio {
     }
   }
 
-  Future facestore(FaceShapeModel item) async {
+  Future facestore(int idpegawai, double faceshape) async {
     try {
       final result = await dio.post(
         "$baseUrl/pegawai/store",
-        data: item.toMap(),
+        data: {
+          "idpegawai": idpegawai,
+          "faceshape": faceshape,
+        },
       );
 
       return result.data;

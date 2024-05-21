@@ -1,10 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
-import 'package:presensiapps/models/faceshapemodel.dart';
-
 import 'package:presensiapps/pages/models/user.model.dart';
 import 'package:presensiapps/screen/home_page.dart';
-import 'package:presensiapps/utils/presensidio.dart';
 
 class RekamWajahSheet extends StatefulWidget {
   RekamWajahSheet({
@@ -21,13 +18,6 @@ class RekamWajahSheet extends StatefulWidget {
 
 class _RekamWajahSheetState extends State<RekamWajahSheet> {
   Future _signIn(context, user) async {
-    PresensiDio().facestore(
-      FaceShapeModel(
-        idpegawai: widget.userid,
-        faceshape: 5.0,
-      ),
-    );
-
     // showDialog(
     //   context: context,
     //   builder: (context) {

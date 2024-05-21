@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:presensiapps/pages/models/user.model.dart';
 import 'package:presensiapps/screen/home_page.dart';
 
-class SignInSheet extends StatefulWidget {
-  SignInSheet({
+class SignUpSheet extends StatefulWidget {
+  SignUpSheet({
     Key? key,
     required this.user,
     required this.userid,
@@ -13,11 +13,11 @@ class SignInSheet extends StatefulWidget {
   final int userid;
 
   @override
-  State<SignInSheet> createState() => _SignInSheetState();
+  State<SignUpSheet> createState() => _SignUpSheetState();
 }
 
-class _SignInSheetState extends State<SignInSheet> {
-  Future _signIn(context, user) async {
+class _SignUpSheetState extends State<SignUpSheet> {
+  Future _SignUp(context, user) async {
     // showDialog(
     //   context: context,
     //   builder: (context) {
@@ -37,10 +37,10 @@ class _SignInSheetState extends State<SignInSheet> {
   @override
   void initState() {
     super.initState();
-    _signIn(context, widget.user);
+    _SignUp(context, widget.user);
   }
 
-//  Future _signIn(context, user) async {
+//  Future _SignUp(context, user) async {
   @override
   Widget build(BuildContext context) {
     return Container(

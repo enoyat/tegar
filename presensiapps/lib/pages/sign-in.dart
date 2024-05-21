@@ -1,4 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
+
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:presensiapps/utils/presensidio.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:presensiapps/locator.dart';
 import 'package:presensiapps/pages/models/user.model.dart';
 import 'package:presensiapps/pages/widgets/auth_button.dart';
@@ -7,14 +14,15 @@ import 'package:presensiapps/pages/widgets/camera_header.dart';
 import 'package:presensiapps/pages/widgets/signin_form.dart';
 import 'package:presensiapps/pages/widgets/single_picture.dart';
 import 'package:presensiapps/services/camera.service.dart';
-import 'package:presensiapps/services/ml_service.dart';
 import 'package:presensiapps/services/face_detector_service.dart';
-import 'package:camera/camera.dart';
-import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:presensiapps/services/ml_service.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+  const SignIn({
+    Key? key,
+    required this.faceshaep,
+  }) : super(key: key);
+  final double faceshaep;
 
   @override
   SignInState createState() => SignInState();
@@ -77,11 +85,30 @@ class SignInState extends State<SignIn> {
     if (_faceDetectorService.faceDetected) {
       await _cameraService.takePicture();
       setState(() => _isPictureTaken = true);
+      double mata = _mlService.threshold.toDouble();
+      print("shape" + mata.toString());
+
+      if (mata != widget.faceshaep) {
+        showDialog(
+            context: context,
+            builder: (context) =>
+                AlertDialog(content: Text('face tidak dikenal!')));
+        Navigator.pop(context);
+      } else {
+        await PresensiDio().postpresensi(userid!);
+        showDialog(
+            context: context,
+            builder: (context) =>
+                AlertDialog(content: Text('Presensi Sukses!')));
+        Navigator.pop(context);
+      }
+      //get data face
     } else {
       showDialog(
           context: context,
           builder: (context) =>
-              AlertDialog(content: Text('No face detected!')));
+              AlertDialog(content: Text('No face detected xxx!')));
+      Navigator.pop(context);
     }
   }
 
@@ -138,13 +165,26 @@ class SignInState extends State<SignIn> {
   }
 
   signInSheet({@required User? user}) => user == null
-      ? Container(
-          width: MediaQuery.of(context).size.width,
-          padding: EdgeInsets.all(20),
-          child: Text(
-            'User not found 😞',
-            style: TextStyle(fontSize: 20),
-          ),
+      ? Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Center(
+              child: Center(
+                child: Container(
+                  child: Text(
+                    'Pegawai tidak ditemukan',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Ulangi'),
+            )
+          ],
         )
       : SignInSheet(user: user, userid: userid!);
 }

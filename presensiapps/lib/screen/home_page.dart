@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:presensiapps/locator.dart';
 import 'package:presensiapps/pages/accound.dart';
-import 'package:presensiapps/pages/rekamwajah.dart';
 import 'package:presensiapps/pages/sign-in.dart';
 import 'package:presensiapps/pages/sign-up.dart';
 import 'package:presensiapps/screen/historyreservasicustomer_page.dart';
@@ -231,7 +230,8 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) => const SignIn(),
+                          builder: (BuildContext context) =>
+                              SignIn(faceshaep: double.parse(faceshape!)),
                         ),
                       );
                     } else {
@@ -316,7 +316,8 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) => RekamWajah(),
+                        builder: (BuildContext context) =>
+                            SignUp(faceshaep: double.parse(faceshape!)),
                       ),
                     );
                   },
