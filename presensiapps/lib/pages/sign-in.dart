@@ -119,6 +119,7 @@ class SignInState extends State<SignIn> {
   Future<void> onTap() async {
     // _reload();
     await takePicture();
+    _reload();
     Navigator.push(context, MaterialPageRoute(builder: (context) {
       return HomePage();
     }));
