@@ -3,6 +3,7 @@ import 'dart:async';
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:presensiapps/screen/home_page.dart';
 import 'package:presensiapps/utils/presensidio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -87,28 +88,22 @@ class SignInState extends State<SignIn> {
       setState(() => _isPictureTaken = true);
       double mata = _mlService.threshold.toDouble();
       print("shape" + mata.toString());
-
+      print("asli" + widget.faceshaep.toString());
       if (mata != widget.faceshaep) {
-        showDialog(
-            context: context,
-            builder: (context) =>
-                AlertDialog(content: Text('face tidak dikenal!')));
-        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Wajah tidak cocok!'),
+        ));
       } else {
         await PresensiDio().postpresensi(userid!);
-        showDialog(
-            context: context,
-            builder: (context) =>
-                AlertDialog(content: Text('Presensi Sukses!')));
-        Navigator.pop(context);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('presensi sukses!'),
+        ));
       }
       //get data face
     } else {
-      showDialog(
-          context: context,
-          builder: (context) =>
-              AlertDialog(content: Text('No face detected xxx!')));
-      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Wajah tidak terdeteksi!'),
+      ));
     }
   }
 
@@ -122,13 +117,18 @@ class SignInState extends State<SignIn> {
   }
 
   Future<void> onTap() async {
+    // _reload();
     await takePicture();
-    if (_faceDetectorService.faceDetected) {
-      User? user = await _mlService.predict();
-      var bottomSheetController = scaffoldKey.currentState!
-          .showBottomSheet((context) => signInSheet(user: user));
-      bottomSheetController.closed.whenComplete(_reload);
-    }
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return HomePage();
+    }));
+    // if (_faceDetectorService.faceDetected) {
+    //   User? user = await _mlService.predict();
+
+    //   var bottomSheetController = scaffoldKey.currentState!
+    //       .showBottomSheet((context) => signInSheet(user: user));
+    //   bottomSheetController.closed.whenComplete(_reload);
+    // }
   }
 
   Widget getBodyWidget() {
