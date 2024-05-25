@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
-import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:google_ml_vision/google_ml_vision.dart';
@@ -8,13 +7,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:presensiapps/face_detector_painter.dart';
+import 'package:presensiapps/utils/presensidio.dart';
 
 class FaceDeteksi extends StatefulWidget {
   const FaceDeteksi({
     Key? key,
     required this.faceshape,
+    required this.userid,
   }) : super(key: key);
   final double faceshape;
+  final int userid;
 
   @override
   State<FaceDeteksi> createState() => _FaceDeteksiState();
@@ -54,8 +56,9 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
         child: const Icon(Icons.add),
         onPressed: () async {
           /// Ambil gambar dari galeri
-          final imagesrc =
-              await ImagePicker().pickImage(source: ImageSource.camera);
+          final imagesrc = await ImagePicker().pickImage(
+              source: ImageSource.camera,
+              preferredCameraDevice: CameraDevice.rear);
 
           /// Pastikan bahwa gambarnya valid
           /// Tampilkan loading
@@ -89,19 +92,13 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
                 .toString()
                 .length
                 .toDouble();
-            List<Rect>? rectArr;
-            for (Face face in faces) {
-              rectArr!.add(face.boundingBox);
-            }
 
-            // FaceContourType? mata =
-            //     faces[0].getContour(FaceContourType.upperLipTop);
-
-            print("Wajah $rectArr");
+            print("Wajah $leftEyeContour");
             print("asli" + widget.faceshape!.toString());
 
             if (leftEyeContour.toString() == widget.faceshape.toString()) {
-              showDialogMessage('Wajah terdeteksi');
+              await PresensiDio().postpresensi(widget.userid);
+              showDialogMessage('Presensi Sukses');
             } else {
               showDialogMessage('Wajah tidak dikenal');
             }

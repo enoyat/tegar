@@ -353,8 +353,10 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              FaceDeteksi(faceshape: double.parse(faceshape!))),
+                          builder: (BuildContext context) => FaceDeteksi(
+                                faceshape: double.parse(faceshape!),
+                                userid: userid!,
+                              )),
                     );
                   },
                   child: Column(
