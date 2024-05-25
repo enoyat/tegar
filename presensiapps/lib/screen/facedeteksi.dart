@@ -1,13 +1,20 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
+import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
 import 'package:google_ml_vision/google_ml_vision.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:presensiapps/face_detector_painter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:presensiapps/face_detector_painter.dart';
+
 class FaceDeteksi extends StatefulWidget {
-  const FaceDeteksi({super.key});
+  const FaceDeteksi({
+    Key? key,
+    required this.faceshape,
+  }) : super(key: key);
+  final double faceshape;
 
   @override
   State<FaceDeteksi> createState() => _FaceDeteksiState();
@@ -78,12 +85,22 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
             showDialogMessage('Wajah tidak terdeteksi');
           } else {
             double leftEyeContour = faces[0]
-                .getContour(FaceContourType.leftEye)
+                .getContour(FaceContourType.rightEyebrowBottom)
                 .toString()
                 .length
                 .toDouble();
+            List<Rect>? rectArr;
+            for (Face face in faces) {
+              rectArr!.add(face.boundingBox);
+            }
 
-            if (leftEyeContour.toString() == faces) {
+            // FaceContourType? mata =
+            //     faces[0].getContour(FaceContourType.upperLipTop);
+
+            print("Wajah $rectArr");
+            print("asli" + widget.faceshape!.toString());
+
+            if (leftEyeContour.toString() == widget.faceshape.toString()) {
               showDialogMessage('Wajah terdeteksi');
             } else {
               showDialogMessage('Wajah tidak dikenal');
@@ -112,7 +129,7 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Text(
-            'Silakan ambil foto dulu ya\n'
+            'Silakan ambil foto \n'
             'dengan cara tekan tombol tambah di bagian kanan bawah',
             textAlign: TextAlign.center,
           ),

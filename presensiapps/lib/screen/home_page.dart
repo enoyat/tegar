@@ -4,6 +4,7 @@ import 'package:presensiapps/locator.dart';
 import 'package:presensiapps/pages/accound.dart';
 import 'package:presensiapps/pages/sign-in.dart';
 import 'package:presensiapps/pages/sign-up.dart';
+import 'package:presensiapps/screen/facedeteksi.dart';
 import 'package:presensiapps/screen/historyreservasicustomer_page.dart';
 import 'package:presensiapps/services/camera.service.dart';
 import 'package:presensiapps/services/face_detector_service.dart';
@@ -332,6 +333,41 @@ class _HomePageState extends State<HomePage> {
                       const SizedBox(height: 10),
                       const Text(
                         'REKAM WAJAH',
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Card(
+                color: Color.fromARGB(255, 102, 202, 8),
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext context) =>
+                              FaceDeteksi(faceshape: double.parse(faceshape!))),
+                    );
+                  },
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        'assets/images/jadwala.png',
+                        width: 60,
+                        height: 60,
+                      ),
+                      const SizedBox(height: 10),
+                      const Text(
+                        'PRESENSI WAJAH',
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.bold,
