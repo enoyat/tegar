@@ -1,9 +1,11 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:google_ml_vision/google_ml_vision.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:presensiapps/models/faceshapemodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:presensiapps/face_detector_painter.dart';
@@ -28,8 +30,12 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
   var widthImage = 0.0;
   var heightImage = 0.0;
   var faces = <Face>[];
+  var face = Face;
   var shape = 0.0;
+  var boundingBox = Rect.fromPoints(Offset(0, 0), Offset(0, 0));
   String? faceshape = '';
+  FaceLandmark? leftEye;
+  String _text = '';
 
   void _setter() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -78,6 +84,7 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
 
           /// Buat objek FaceDetector
           final faceDetector = GoogleVision.instance.faceDetector();
+          FaceContour? wajah;
 
           /// Jalankan proses untuk deteksi wajahnya
           faces.clear();
@@ -87,16 +94,16 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
           if (faces.isEmpty) {
             showDialogMessage('Wajah tidak terdeteksi');
           } else {
-            double leftEyeContour = faces[0]
-                .getContour(FaceContourType.rightEyebrowBottom)
-                .toString()
-                .length
-                .toDouble();
+            String text = 'Faces found: ${faces.length}\n\n';
 
-            print("Wajah $leftEyeContour");
-            print("asli" + widget.faceshape!.toString());
+            for (final faceku in faces) {
+              _text = _text + "face :" + faceku.boundingBox.toString();
+            }
 
-            if (leftEyeContour.toString() == widget.faceshape.toString()) {
+            print("Wajah $_text");
+            print("asli" + widget.faceshape.toString());
+
+            if (leftEye.toString() == widget.faceshape.toString()) {
               await PresensiDio().postpresensi(widget.userid);
               showDialogMessage('Presensi Sukses');
             } else {
