@@ -33,7 +33,7 @@ class ApiAuthController extends Controller
                 $roles = Auth::user()->roles_id;
                 $idpegawai = $datauser->idpegawai;
                 $namapegawai = $datauser->namapegawai;
-                $faceshape = number_format($datauser->faceshape,2);
+                $faceshape = $datauser->faceshape;
 
             $datanya= [
                     'id' => $cek->id,

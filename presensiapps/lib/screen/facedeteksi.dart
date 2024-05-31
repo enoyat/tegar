@@ -5,8 +5,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:google_ml_vision/google_ml_vision.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:presensiapps/models/faceshapemodel.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:presensiapps/face_detector_painter.dart';
 import 'package:presensiapps/utils/presensidio.dart';
@@ -17,7 +15,7 @@ class FaceDeteksi extends StatefulWidget {
     required this.faceshape,
     required this.userid,
   }) : super(key: key);
-  final double faceshape;
+  final String faceshape;
   final int userid;
 
   @override
@@ -33,23 +31,28 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
   var face = Face;
   var shape = 0.0;
   var boundingBox = Rect.fromPoints(Offset(0, 0), Offset(0, 0));
+  List<double> arrface = [];
+  List<double> arrfacesc = [];
+  List<String> arrfacesp = [];
+
   String? faceshape = '';
   FaceLandmark? leftEye;
   String _text = '';
 
-  void _setter() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Future.delayed(const Duration(seconds: 2)).then((_) async {
-      setState(() {
-        faceshape = prefs.getString('faceshape');
-      });
-    });
-  }
+  void _setter() async {}
 
   @override
   void initState() {
     super.initState();
     _setter();
+  }
+
+  double euclideanDistance(List e1, List e2) {
+    double sum = 0.0;
+    for (int i = 0; i < e1.length; i++) {
+      sum += pow((e1[i] - e2[i]), 2);
+    }
+    return sqrt(sum);
   }
 
   @override
@@ -84,7 +87,6 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
 
           /// Buat objek FaceDetector
           final faceDetector = GoogleVision.instance.faceDetector();
-          FaceContour? wajah;
 
           /// Jalankan proses untuk deteksi wajahnya
           faces.clear();
@@ -95,15 +97,35 @@ class _FaceDeteksiState extends State<FaceDeteksi> {
             showDialogMessage('Wajah tidak terdeteksi');
           } else {
             String text = 'Faces found: ${faces.length}\n\n';
+            arrface = [];
+            arrfacesp = [];
 
             for (final faceku in faces) {
               _text = _text + "face :" + faceku.boundingBox.toString();
+              arrface.add(faceku.boundingBox.left);
+              arrface.add(faceku.boundingBox.top);
+              arrface.add(faceku.boundingBox.right);
+              arrface.add(faceku.boundingBox.bottom);
             }
+            arrfacesp = [];
+            var arr = widget.faceshape;
+            arrfacesp = arr.split(',');
 
-            print("Wajah $_text");
-            print("asli" + widget.faceshape.toString());
+            // print("datanya" + arrfacesp[0]);
+            arrfacesc.add(double.parse(arrfacesp[0]));
+            arrfacesc.add(double.parse(arrfacesp[1]));
+            arrfacesc.add(double.parse(arrfacesp[2]));
+            arrfacesc.add(double.parse(arrfacesp[3]));
 
-            if (leftEye.toString() == widget.faceshape.toString()) {
+            print(arrfacesc[0].toString());
+            //double result = euclideanDistance(arrfacesp, arrface);
+
+            print("Wajah " + _text);
+            double citra = euclideanDistance(arrfacesc, arrface);
+            double threshold = 200;
+            print("result $citra");
+
+            if (citra <= threshold) {
               await PresensiDio().postpresensi(widget.userid);
               showDialogMessage('Presensi Sukses');
             } else {

@@ -93,7 +93,7 @@ class PresensiDio {
     }
   }
 
-  Future facestore(int idpegawai, double faceshape) async {
+  Future facestore(int idpegawai, String faceshape) async {
     try {
       final result = await dio.post(
         "$baseUrl/pegawai/store",

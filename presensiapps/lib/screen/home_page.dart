@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:presensiapps/locator.dart';
 import 'package:presensiapps/pages/accound.dart';
-import 'package:presensiapps/pages/sign-in.dart';
-import 'package:presensiapps/pages/sign-up.dart';
 import 'package:presensiapps/screen/facedeteksi.dart';
 import 'package:presensiapps/screen/historyreservasicustomer_page.dart';
+import 'package:presensiapps/screen/rekam.dart';
 import 'package:presensiapps/services/camera.service.dart';
 import 'package:presensiapps/services/face_detector_service.dart';
 import 'package:presensiapps/utils/presensidio.dart';
@@ -153,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(height: 5),
                     isLoading
                         ? const CircularProgressIndicator()
-                        : Text("ID :$userid - ${username!} $faceshape",
+                        : Text("ID :$userid - ${username!}",
                             style: const TextStyle(
                               fontSize: 15,
                               color: Colors.black,
@@ -231,9 +230,8 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              SignIn(faceshaep: double.parse(faceshape!)),
-                        ),
+                            builder: (BuildContext context) => FaceDeteksi(
+                                faceshape: faceshape!, userid: userid!)),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -317,8 +315,10 @@ class _HomePageState extends State<HomePage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (BuildContext context) =>
-                            SignUp(faceshaep: double.parse(faceshape!)),
+                        builder: (BuildContext context) => Rekam(
+                          faceshape: faceshape!,
+                          userid: userid!,
+                        ),
                       ),
                     );
                   },
@@ -342,43 +342,43 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              Card(
-                color: Color.fromARGB(255, 102, 202, 8),
-                elevation: 5,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (BuildContext context) => FaceDeteksi(
-                                faceshape: double.parse(faceshape!),
-                                userid: userid!,
-                              )),
-                    );
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        'assets/images/jadwala.png',
-                        width: 60,
-                        height: 60,
-                      ),
-                      const SizedBox(height: 10),
-                      const Text(
-                        'PRESENSI WAJAH',
-                        style: TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
+              // Card(
+              //   color: Color.fromARGB(255, 102, 202, 8),
+              //   elevation: 5,
+              //   shape: RoundedRectangleBorder(
+              //     borderRadius: BorderRadius.circular(10),
+              //   ),
+              //   child: InkWell(
+              //     onTap: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (BuildContext context) => FaceDeteksi(
+              //                   faceshape: faceshape!,
+              //                   userid: userid!,
+              //                 )),
+              //       );
+              //     },
+              //     child: Column(
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Image.asset(
+              //           'assets/images/jadwala.png',
+              //           width: 60,
+              //           height: 60,
+              //         ),
+              //         const SizedBox(height: 10),
+              //         const Text(
+              //           'PRESENSI WAJAH',
+              //           style: TextStyle(
+              //             fontSize: 12,
+              //             fontWeight: FontWeight.bold,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
+              // ),
             ]),
           ],
         ),
