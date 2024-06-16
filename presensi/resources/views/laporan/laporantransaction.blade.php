@@ -1,8 +1,9 @@
-
-{{-- <?php
+@if($aksi=="export")
+ <?php
 	header("Content-type: application/vnd-ms-excel");
 	header("Content-Disposition: attachment; filename=$namafile.xls");
-?> --}}
+?>
+@endif
 <style> .str{ mso-number-format:\@; } </style>
 <table width="700" border="0" cellpadding="0" cellspacing="0" style="font-size: 13px">
         <tr style="height: 100px">

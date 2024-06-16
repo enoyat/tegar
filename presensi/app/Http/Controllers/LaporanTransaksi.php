@@ -59,6 +59,7 @@ class LaporanTransaksi extends Controller
 
         $bulan = $request->bulan;
         $tahun = $request->tahun;
+        $aksi = $request->aksi;
         $datatransaksi = [];
         $pegawai = Pegawai::get();
         foreach ($pegawai as $peg) {
@@ -92,7 +93,7 @@ class LaporanTransaksi extends Controller
 
                 $datatransaksi[$peg->idpegawai] = ['idpegawai' => $peg->idpegawai, 'nama' => $peg->namapegawai, 'nik' => $peg->nik, 'hadir' => $hadir, 'izin' => $izin, 'tanpaketerangan' => $tanpaketerangan, 'tepatwaktu' => $tepatwaktu, 'terlambat' => $terlambat];
             }
-        return view('laporan.laporantransaction')->with(['datatransaksi' => $datatransaksi, 'bulan' => $bulan, 'tahun' => $tahun,'namafile'=>'Rekap']);
+        return view('laporan.laporantransaction')->with(['datatransaksi' => $datatransaksi, 'bulan' => $bulan, 'tahun' => $tahun,'namafile'=>'Rekap','aksi'=>$aksi]);
     }
     public function exporttransaction()
     {

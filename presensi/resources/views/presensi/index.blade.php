@@ -74,8 +74,16 @@
                                         <td><?php echo $key->pegawai->nik; ?></td>
                                         <td><?php echo $key->statuspresensi; ?></td>
                                         <td><?php echo $key->tanggal; ?></td>
-                                        <td><?php echo $key->jamdatang; ?></td>
-                                        <td><?php echo $key->jampulang; ?></td>
+                                        <td>
+                                            @if($key->statuspresensi=="Hadir")
+                                            <?php echo $key->jamdatang; ?>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if($key->statuspresensi=="Hadir")
+                                            <?php echo $key->jampulang; ?>
+                                            @endif
+                                        </td>
                                         <td>
 
 

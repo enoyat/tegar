@@ -68,7 +68,9 @@
     ?>
     </tbody>
 </table>
-<a href="{{ route('laporan.laporantransaction',['bulan'=>$bulan, 'tahun'=>$tahun]) }}" class="btn btn-sm bg-primary" id="cetak" target="_blank">Cetak Laporan Presensi</a>
+<a href="{{ route('laporan.laporantransaction',['bulan'=>$bulan, 'tahun'=>$tahun,'aksi'=>'cetak']) }}" class="btn btn-sm bg-primary" id="cetak" target="_blank">Cetak Laporan Presensi</a>
+<a href="{{ route('laporan.laporantransaction',['bulan'=>$bulan, 'tahun'=>$tahun,'aksi'=>'export']) }}" class="btn btn-sm bg-primary" id="cetak" target="_blank">Export Excel Laporan Presensi</a>
+
 <script>
     $('.mytable').DataTable({
     });
